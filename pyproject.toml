@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel", "packaging>=24.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cygnet"
+version = "1.0.0"
+description = "CYGNET statistical tests for context-dependent gene-environment effects."
+readme = "README.md"
+requires-python = ">=3.9,<3.14"
+license = "MIT"
+authors = [
+  {name = "CYGNET developers"}
+]
+dependencies = [
+  "chiscore>=0.2.2,<0.3",
+  "joblib",
+  "matplotlib",
+  "numpy>=1.23,<2",
+  "pandas",
+  "scikit-learn",
+  "scipy",
+  "seaborn",
+  "statsmodels",
+  "tqdm"
+]
+
+[project.optional-dependencies]
+anndata = ["anndata"]
+test = ["pytest", "anndata"]
+docs = ["mkdocs>=1.6,<2"]
+
+[project.urls]
+Homepage = "https://github.com/yt-pan/CYGNET"
+Repository = "https://github.com/yt-pan/CYGNET"
+Issues = "https://github.com/yt-pan/CYGNET/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

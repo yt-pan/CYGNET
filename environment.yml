@@ -1,0 +1,24 @@
+name: cygnet
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy=1.26
+  - scipy=1.15
+  - seaborn
+  - pandas=2.2
+  - scikit-learn=1.6
+  - packaging>=24.2
+  - statsmodels=0.14
+  - matplotlib
+  - joblib
+  - tqdm
+  - r-base
+  - r-mgcv
+  - pip
+  - setuptools>=68
+  - wheel
+  - pip:
+      - chiscore==0.2.3
+      - anndata==0.11.0
+      - pytest==8.3.3

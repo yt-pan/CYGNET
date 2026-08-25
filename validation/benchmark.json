@@ -1,0 +1,14 @@
+{
+  "score_test": {
+    "max_abs_difference": 0.0,
+    "reference_median_seconds": 0.0031263999990187585,
+    "cygnet_median_seconds": 0.0038698000134900212,
+    "cygnet_to_reference_ratio": 1.2377814786030525
+  },
+  "fourier_features_50000x2_to_100": {
+    "max_abs_difference": 0.0,
+    "reference_median_seconds": 0.042282700014766306,
+    "cygnet_median_seconds": 0.042805799981579185,
+    "cygnet_to_reference_ratio": 1.012371489205519
+  }
+}
