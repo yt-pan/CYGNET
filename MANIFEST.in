@@ -6,4 +6,3 @@ recursive-include docs *
 recursive-include examples *.py
 recursive-include scripts *.py *.R
 recursive-include tests *.py
-recursive-include validation *.json

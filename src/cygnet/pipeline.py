@@ -148,8 +148,8 @@ def _numeric_frame(frame, name):
             raise ValueError(f"{name} must contain only numeric values.") from exc
 
     values = out.to_numpy(copy=False)
-    # A full np.isfinite(values) mask can itself be large.  Checking column
-    # blocks bounds temporary memory without changing validation semantics.
+    # A full np.isfinite(values) mask can itself be large. Checking column
+    # blocks bounds peak memory while preserving the finite-value check.
     for start in range(0, values.shape[1], 64):
         if not np.isfinite(values[:, start : start + 64]).all():
             raise ValueError(f"{name} must contain only finite numeric values.")
@@ -392,10 +392,10 @@ def run_cygnet_pipeline(
     permutation is disabled or ``n_permutations`` is zero, raw BH-adjusted
     p-values are still returned in the standard result table, but empirical
     permutation p-values remain unavailable. Automatic RBF kernels use the
-    standard median squared-distance heuristic by default. Most article
-    analyses combine ``"manuscript_range"`` with
-    ``permutation_ecdf_method="manuscript_interpolation"``; the corrected
-    large Xenium analysis uses ``"median_half"`` with that ECDF policy.
+    standard median squared-distance heuristic by default. The article range
+    policy combines ``"manuscript_range"`` with
+    ``permutation_ecdf_method="manuscript_interpolation"``. The
+    ``"median_half"`` policy remains available independently.
     """
     locations_df = _numeric_frame(_as_frame(locations, "locations"), "locations")
     celltype_df = _numeric_frame(_as_frame(celltypes, "celltypes"), "celltypes")

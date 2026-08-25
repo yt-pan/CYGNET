@@ -375,9 +375,9 @@ def get_fourier(location,gamma_in=1.0,n_component=100, random_state=1):
     location = np.asarray(location, float).reshape(n, -1)
     # This reproduces sklearn.kernel_approximation.RBFSampler's NumPy
     # RandomState draws and scaling. NumPy 2 on the affected Windows stack can
-    # terminate inside safe_sparse_dot's BLAS dispatch, so only that platform
-    # combination uses the safe einsum fallback. Other stacks retain the old
-    # matrix-multiplication path and its performance.
+    # terminate inside safe_sparse_dot's BLAS dispatch, so that configuration
+    # uses the safe einsum fallback. Other configurations use matrix
+    # multiplication.
     rng = np.random.RandomState(random_state)
     random_weights = np.sqrt(2.0 * gamma_in) * rng.normal(
         size=(location.shape[1], n_component)
@@ -411,7 +411,7 @@ def decompose_low_rank_blocks(blocks, tol=1e-10):
         # 2. Filter out numerical noise (eigenvalues that are essentially 0)
         max_eig = np.max(eigenvalues)
         if max_eig <= tol:
-            # If the whole block is just zeros, it has rank 0.
+            # A block containing only zeros has rank 0.
             # Create an (n x 0) empty matrix to represent no variance.
             L_block = np.empty((matrix.shape[0], 0))
         else:
@@ -609,8 +609,7 @@ def construct_rbf_kernel(
         ``1 / median(||x_i - x_j||^2)``. ``"median_half"`` uses
         ``1 / (2 * median(||x_i - x_j||^2))``.
         ``"manuscript_range"`` selects the coordinate-range setting used by
-        most article analyses: ``1 / median(max(X_j) - min(X_j))``. The
-        corrected large Xenium analysis uses ``"median_half"``.
+        the article analyses: ``1 / median(max(X_j) - min(X_j))``.
     gamma_max_samples : int or None, default 1000
         Maximum observations used to estimate a distance-based gamma. The
         deterministic subsample prevents quadratic memory growth. Use
@@ -818,10 +817,9 @@ def cygnet_wald_testing_x(y, X, x, E, kernel_lst, maxiter=1000):
     X = np.asarray(X, float).reshape(n, -1)
     x = np.asarray(x, float).reshape(n, -1)
 
-    # 2. Check Rank of X just in case
-    # (Optional, but good practice given previous code has rank checks)
+    # 2. Evaluate the fixed-effect design rank.
     if _matrix_rank(X) != X.shape[1]:
-        # Simple fallback or warning
+        # Preserve the established numerical path for rank-deficient inputs.
         pass
 
     # 3. Estimate Variance Components for the Null Model
@@ -888,7 +886,7 @@ def cygnet_wald_testing_x(y, X, x, E, kernel_lst, maxiter=1000):
         # P-value (Chi-squared with dof=1)
         p_val = chi2.sf(score, df=1)
         
-        # 'a' is just [1.0] because Wald test stat ~ 1 * Chi2(1)
+        # 'a' is [1.0] because the Wald statistic follows 1 * Chi2(1).
         a = np.array([1.0])
 
     except Exception:

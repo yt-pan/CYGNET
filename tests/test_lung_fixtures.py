@@ -27,10 +27,12 @@ def test_lung_tutorial_fixtures_run_pipeline_smoke():
     spot = anndata.read_h5ad(spot_path)
     single = anndata.read_h5ad(single_path)
 
-    assert spot.uns["cygnet_fixture"]["metadata_source"] == "real lung RData workspace"
-    assert single.uns["cygnet_fixture"]["metadata_source"] == "real lung RData workspace"
-    assert spot.uns["cygnet_fixture"]["expression_source"] == "real_normalized_counts_df_from_RData"
-    assert single.uns["cygnet_fixture"]["expression_source"] == "real_normalized_counts_df_from_RData"
+    assert spot.uns["cygnet_fixture"]["dataset"] == (
+        "human-lung-cancer-ffpe-2-standard Visium"
+    )
+    assert single.uns["cygnet_fixture"]["dataset"] == "human-lung-cancer Xenium"
+    assert spot.uns["cygnet_fixture"]["modality"] == "spot"
+    assert single.uns["cygnet_fixture"]["modality"] == "single-cell"
 
     spot_celltypes = [column for column in spot.obs.columns if column != "pollutant"]
     spot_result = cygnet.run_cygnet_pipeline_from_anndata(

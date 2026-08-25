@@ -30,5 +30,6 @@ renv/staging/
 *.RDS
 /data/
 /results/
+/validation/*.json
 .DS_Store
 Thumbs.db

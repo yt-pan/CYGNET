@@ -57,9 +57,9 @@ gamma = 1 / median(pairwise squared distances)
 The spatial setting used by most article analyses is selected with
 `gamma_spatial_method="manuscript_range"`, which uses the reciprocal median
 coordinate-column range. `gamma_spatial_method="median_half"` uses half the
-inverse median squared-distance value and matches the corrected large Xenium
-analysis when paired with its recorded deterministic subsample size. An
-explicit numeric gamma takes precedence over an automatic method.
+inverse median squared-distance value and supports deterministic coordinate
+subsampling through `gamma_max_samples`. An explicit numeric gamma takes
+precedence over an automatic method.
 
 Pass `environment_kernel="values"` or `spatial_kernel="values"` when an input
 is already a basis matrix.

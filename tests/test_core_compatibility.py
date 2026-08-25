@@ -36,52 +36,60 @@ def small_inputs():
 
 def test_null_model_matches_reference(small_inputs):
     """The CYGNET null variance solver should match the standalone implementation."""
-    old = _load_reference_module()
+    reference = _load_reference_module()
     y, X, x, E, S, _ = small_inputs
-    old_result = old.reference_lmm_null_multiK(y.reshape(-1, 1), np.c_[X, x], [E, S], maxiter=5)
+    reference_result = reference.reference_lmm_null_multiK(
+        y.reshape(-1, 1), np.c_[X, x], [E, S], maxiter=5
+    )
     new_result = cygnet.cygnet_null_multiK(y.reshape(-1, 1), np.c_[X, x], [E, S], maxiter=5)
-    np.testing.assert_allclose(new_result[0], old_result[0], rtol=0, atol=0)
-    assert new_result[1] == old_result[1]
+    np.testing.assert_allclose(new_result[0], reference_result[0], rtol=0, atol=0)
+    assert new_result[1] == reference_result[1]
 
 
 def test_davies_score_test_matches_reference(small_inputs):
     """The default Davies score test should produce identical outputs."""
-    old = _load_reference_module()
+    reference = _load_reference_module()
     y, X, x, E, S, _ = small_inputs
-    old_result = old.reference_lmm_davies(y, X, x, E, [E, S], maxiter=5)
+    reference_result = reference.reference_lmm_davies(
+        y, X, x, E, [E, S], maxiter=5
+    )
     new_result = cygnet.cygnet_davies(y, X, x, E, [E, S], maxiter=5)
-    np.testing.assert_allclose(new_result[0], old_result[0], rtol=0, atol=0)
-    assert new_result[1] == old_result[1]
-    assert new_result[2] == old_result[2]
-    assert new_result[3] == old_result[3]
+    np.testing.assert_allclose(new_result[0], reference_result[0], rtol=0, atol=0)
+    assert new_result[1] == reference_result[1]
+    assert new_result[2] == reference_result[2]
+    assert new_result[3] == reference_result[3]
 
 
 def test_runner_matches_reference(small_inputs):
-    """The high-level CYGNET runner should preserve previous tuple output."""
-    old = _load_reference_module()
+    """The high-level CYGNET runner should preserve documented tuple output."""
+    reference = _load_reference_module()
     y, X, x, E, S, inter = small_inputs
-    old_result = old.run_reference_lmm(y, X, x, E, [E, S], [inter, E, S], maxiter=5)
+    reference_result = reference.run_reference_lmm(
+        y, X, x, E, [E, S], [inter, E, S], maxiter=5
+    )
     new_result = cygnet.run_cygnet(y, X, x, E, [E, S], [inter, E, S], maxiter=5)
-    np.testing.assert_allclose(new_result[0], old_result[0], rtol=0, atol=0)
-    assert new_result[1] == old_result[1]
-    assert new_result[2] == old_result[2]
-    np.testing.assert_allclose(new_result[3], old_result[3], rtol=0, atol=0)
-    assert new_result[4] == old_result[4]
+    np.testing.assert_allclose(new_result[0], reference_result[0], rtol=0, atol=0)
+    assert new_result[1] == reference_result[1]
+    assert new_result[2] == reference_result[2]
+    np.testing.assert_allclose(new_result[3], reference_result[3], rtol=0, atol=0)
+    assert new_result[4] == reference_result[4]
 
 
 def test_kernel_helpers_match_reference(small_inputs):
     """Kernel construction helpers should match the reference."""
-    old = _load_reference_module()
+    reference = _load_reference_module()
     _, _, x, E, _, _ = small_inputs
-    old_fourier = old.get_fourier(E, gamma_in=0.5, n_component=8, random_state=7)
+    reference_fourier = reference.get_fourier(
+        E, gamma_in=0.5, n_component=8, random_state=7
+    )
     new_fourier = cygnet.get_fourier(E, gamma_in=0.5, n_component=8, random_state=7)
     # The BLAS-free Windows-safe projection differs from matrix multiplication
     # only at floating-point rounding scale after the cosine transform.
-    np.testing.assert_allclose(new_fourier, old_fourier, rtol=0, atol=1e-15)
+    np.testing.assert_allclose(new_fourier, reference_fourier, rtol=0, atol=1e-15)
 
-    old_inter = old.construct_inter_kernels(E, x)
+    reference_inter = reference.construct_inter_kernels(E, x)
     new_inter = cygnet.construct_inter_kernels(E, x)
-    np.testing.assert_allclose(new_inter, old_inter, rtol=0, atol=0)
+    np.testing.assert_allclose(new_inter, reference_inter, rtol=0, atol=0)
 
 
 def test_public_functions_have_docstrings():

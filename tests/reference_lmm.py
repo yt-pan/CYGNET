@@ -336,7 +336,7 @@ def decompose_low_rank_blocks(blocks, tol=1e-10):
         # 2. Filter out numerical noise (eigenvalues that are essentially 0)
         max_eig = np.max(eigenvalues)
         if max_eig <= tol:
-            # If the whole block is just zeros, it has rank 0.
+            # A block containing only zeros has rank 0.
             # Create an (n x 0) empty matrix to represent no variance.
             L_block = np.empty((matrix.shape[0], 0))
         else:
@@ -684,10 +684,9 @@ def reference_lmm_wald_testing_x(y, X, x, E, kernel_lst, maxiter=1000):
     X = np.asarray(X, float).reshape(n, -1)
     x = np.asarray(x, float).reshape(n, -1)
 
-    # 2. Check Rank of X just in case
-    # (Optional, but good practice given previous code has rank checks)
+    # 2. Evaluate the fixed-effect design rank.
     if np.linalg.matrix_rank(X) != X.shape[1]:
-        # Simple fallback or warning
+        # Preserve the established numerical path for rank-deficient inputs.
         pass
 
     # 3. Estimate Variance Components for the Null Model
@@ -754,7 +753,7 @@ def reference_lmm_wald_testing_x(y, X, x, E, kernel_lst, maxiter=1000):
         # P-value (Chi-squared with dof=1)
         p_val = chi2.sf(score, df=1)
         
-        # 'a' is just [1.0] because Wald test stat ~ 1 * Chi2(1)
+        # 'a' is [1.0] because the Wald statistic follows 1 * Chi2(1).
         a = np.array([1.0])
 
     except Exception:

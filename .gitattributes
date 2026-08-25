@@ -2,6 +2,8 @@
 
 .gitattributes text eol=lf
 .gitignore text eol=lf
+LICENSE text eol=lf
+MANIFEST.in text eol=lf
 *.py text eol=lf
 *.R text eol=lf
 *.md text eol=lf
@@ -9,6 +11,7 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 *.json text eol=lf
+*.txt text eol=lf
 
 *.png binary
 *.jpg binary

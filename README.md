@@ -40,13 +40,13 @@ For the core Python package only, pip can install the tagged release directly
 from GitHub:
 
 ```bash
-python -m pip install "cygnet @ git+https://github.com/yt-pan/CYGNET.git@1.0.0"
+python -m pip install "cygnet @ git+https://github.com/yt-pan/CYGNET.git@1.0.1"
 ```
 
 To include [AnnData](https://anndata.readthedocs.io/) support:
 
 ```bash
-python -m pip install "cygnet[anndata] @ git+https://github.com/yt-pan/CYGNET.git@1.0.0"
+python -m pip install "cygnet[anndata] @ git+https://github.com/yt-pan/CYGNET.git@1.0.1"
 ```
 
 For an editable development install from a clone:
@@ -143,4 +143,5 @@ python scripts/benchmark_reference.py
 
 ## License
 
-CYGNET is distributed under the MIT License.
+CYGNET is distributed under the GNU General Public License v3.0 only
+(`GPL-3.0-only`).

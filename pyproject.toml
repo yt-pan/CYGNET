@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cygnet"
-version = "1.0.0"
+version = "1.0.1"
 description = "CYGNET statistical tests for context-dependent gene-environment effects."
 readme = "README.md"
 requires-python = ">=3.9,<3.14"
-license = "MIT"
+license = "GPL-3.0-only"
 authors = [
   {name = "CYGNET developers"}
 ]

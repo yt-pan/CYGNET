@@ -176,8 +176,8 @@ def matrices_from_anndata(
     gamma_environment_method, gamma_spatial_method : str, default "median"
         Automatic gamma rule passed to :func:`construct_rbf_kernel` when the
         corresponding explicit gamma is omitted. Use ``"manuscript_range"``
-        for most article analyses or ``"median_half"`` for the half-median
-        squared-distance option used by the corrected large Xenium analysis.
+        for the article range policy or ``"median_half"`` for the half-median
+        squared-distance option.
     gamma_max_samples : int or None, default 1000
         Maximum observations used by distance-based automatic gamma rules.
     random_state : int, default 1
